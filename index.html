@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewsX AI - AI-Powered Gold & Forex Trading Signals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gold: {
+                            400: '#facc15',
+                            500: '#eab308',
+                            600: '#ca8a04',
+                            glow: '#ffd700'
+                        },
+                        cyber: {
+                            dark: '#080c14',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            accent: '#00f2fe',
+                            emerald: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-glow': 'pulseGlow 2.5s infinite alternate',
+                        'float': 'float 4s ease-in-out infinite',
+                        'radar': 'radar 3s linear infinite',
+                    },
+                    keyframes: {
+                        pulseGlow: {
+                            '0%': { boxShadow: '0 0 15px rgba(234, 179, 8, 0.2)' },
+                            '100%': { boxShadow: '0 0 35px rgba(234, 179, 8, 0.6)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #050811;
+            color: #f8fafc;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-gold {
+            background: rgba(234, 179, 8, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #FFF5C0 0%, #EAB308 50%, #CA8A04 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .cyan-gradient-text {
+            background: linear-gradient(135deg, #e0f2fe 0%, #38bdf8 50%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="relative custom-scrollbar">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 via-amber-500 to-amber-700 flex items-center justify-center shadow-lg shadow-gold-500/20 group-hover:scale-105 transition-transform">
+                    <i data-lucide="zap" class="w-6 h-6 text-black fill-black"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold tracking-tight text-white font-mono">NewsX<span class="gold-gradient-text">.AI</span></span>
+                    <span class="block text-[10px] tracking-widest text-slate-400 font-mono uppercase font-semibold">Gold & Forex Precision</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+                <a href="#live-signals" class="hover:text-gold-400 transition-colors flex items-center gap-1.5"><i data-lucide="activity" class="w-4 h-4 text-emerald-400"></i> Signals</a>
+                <a href="#chart-preview" class="hover:text-gold-400 transition-colors">XAU/USD Live</a>
+                <a href="#news-tracker" class="hover:text-gold-400 transition-colors">News Tracker</a>
+                <a href="#features" class="hover:text-gold-400 transition-colors">Features</a>
+                <a href="#pricing" class="hover:text-gold-400 transition-colors">VIP Pass</a>
+                <a href="#faq" class="hover:text-gold-400 transition-colors">FAQ</a>
+            </nav>
+
+            <!-- CTA Actions -->
+            <div class="flex items-center gap-4">
+                <button onclick="openModal('telegram')" class="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition-all">
+                    <i data-lucide="send" class="w-4 h-4 text-sky-400"></i> Telegram VIP
+                </button>
+                <a href="#live-signals" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-black font-bold text-sm shadow-lg shadow-gold-500/20 hover:shadow-gold-500/40 transition-all hover:-translate-y-0.5">
+                    Launch Web App
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden">
+        <!-- Background Glow FX -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-gold-500/15 via-emerald-500/10 to-sky-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Market Status Live Pill -->
+            <div class="flex justify-center mb-6">
+                <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-slate-900/90 border border-gold-500/30 text-xs font-mono text-slate-300 shadow-xl backdrop-blur-md">
+                    <span class="relative flex h-2.5 w-2.5">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                    </span>
+                    <span class="font-semibold text-emerald-400">XAU/USD Active Signal:</span>
+                    <span class="text-gold-400 font-bold">BUY ENTRY @ 4069</span>
+                    <span class="text-slate-500">|</span>
+                    <span class="text-slate-400">Win Rate: 91.4%</span>
+                </div>
+            </div>
+
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.15]">
+                    Dominate Gold & Forex Markets with <span class="gold-gradient-text">AI-Powered Precision</span>
+                </h1>
+                <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
+                    Instantly analyze institutional order flows, news sentiment algorithms, and high-probability XAU/USD swing signals with real-time risk management.
+                </p>
+
+                <!-- Hero CTA Buttons -->
+                <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#live-signals" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-gold-400 via-gold-500 to-amber-600 hover:from-gold-300 hover:to-amber-500 text-black font-extrabold text-base shadow-xl shadow-gold-500/25 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i data-lucide="zap" class="w-5 h-5 fill-black"></i> Get Instant AI Signals
+                    </a>
+                    <button onclick="openModal('demo')" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel hover:bg-slate-800 text-white font-bold text-base border border-slate-700 transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="play-circle" class="w-5 h-5 text-sky-400"></i> Watch Platform Demo
+                    </button>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="mt-10 flex flex-wrap items-center justify-center gap-8 text-xs text-slate-400 font-mono">
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i> 91.4% Verified Accuracy
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="clock" class="w-4 h-4 text-sky-400"></i> &lt; 0.2s Signal Latency
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i data-lucide="users" class="w-4 h-4 text-gold-400"></i> 14,200+ Active VIP Traders
+                    </div>
+                </div>
+            </div>
+
+            <!-- Replica Hero Signal Preview Display -->
+            <div class="mt-14 max-w-lg mx-auto">
+                <div class="glass-panel-gold rounded-3xl p-6 sm:p-8 shadow-2xl relative overflow-hidden animate-pulse-glow">
+                    <div class="absolute -top-12 -right-12 w-32 h-32 bg-gold-500/20 rounded-full blur-2xl"></div>
+                    
+                    <div class="flex items-center justify-between border-b border-slate-800/80 pb-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs font-mono font-bold">▼ Bearish USD</span>
+                                <span class="px-2.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-mono font-bold">XAUUSD Buy</span>
+                            </div>
+                            <h3 class="mt-2 text-xl font-extrabold text-white font-mono flex items-center gap-2">
+                                ★ PRIORITY SIGNAL SWING
+                            </h3>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-gold-500/20 border border-gold-500/40 text-gold-400 font-mono text-xs font-bold animate-pulse">
+                            ACTIVE NOW
+                        </span>
+                    </div>
+
+                    <!-- Main Values Grid matching provided screenshot -->
+                    <div class="grid grid-cols-3 gap-3">
+                        <!-- ENTRY -->
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-gold-500/50 text-center relative overflow-hidden">
+                            <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400">ENTRY</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-white mt-1" id="heroEntryVal">4069</div>
+                            <div class="text-[10px] text-emerald-400 font-mono mt-1">Buy Zone</div>
+                        </div>
+
+                        <!-- TP -->
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/40 text-center">
+                            <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400">TP</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-emerald-400 mt-1" id="heroTpVal">4115</div>
+                            <div class="text-[10px] text-emerald-400 font-mono mt-1">+460 Pips</div>
+                        </div>
+
+                        <!-- SL -->
+                        <div class="p-4 rounded-2xl bg-slate-900/90 border border-rose-500/40 text-center">
+                            <div class="text-[10px] uppercase font-mono font-bold tracking-wider text-slate-400">SL</div>
+                            <div class="text-2xl sm:text-3xl font-extrabold font-mono text-rose-400 mt-1" id="heroSlVal">4028</div>
+                            <div class="text-[10px] text-rose-400 font-mono mt-1">-410 Pips</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs font-mono">
+                        <span class="text-slate-300">New Area Swing Buy - <strong class="text-gold-400">Target 500Pips</strong></span>
+                        <span class="text-slate-500">NewsX <strong class="text-sky-400">AI</strong></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Market Signal Simulator Widget -->
+    <section id="live-signals" class="py-16 bg-slate-950/60 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <div class="text-gold-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Live AI Signal Console</div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Interactive Market Signal Engine</h2>
+                </div>
+                <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0">
+                    Switch timeframe strategies and calculate dynamic pip targets based on AI institutional liquidity levels.
+                </p>
+            </div>
+
+            <!-- Simulator Card Container -->
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800">
+                <!-- Strategy Tabs -->
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+                    <div class="flex p-1.5 rounded-2xl bg-slate-900/90 border border-slate-800">
+                        <button onclick="setStrategy('swing')" id="tab-swing" class="px-5 py-2.5 rounded-xl font-bold text-sm transition-all bg-gradient-to-r from-gold-500 to-amber-600 text-black shadow-md">
+                            ★ Priority Swing
+                        </button>
+                        <button onclick="setStrategy('intraday')" id="tab-intraday" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all text-slate-400 hover:text-white">
+                            ⚡ Intraday Alpha
+                        </button>
+                        <button onclick="setStrategy('scalp')" id="tab-scalp" class="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all text-slate-400 hover:text-white">
+                            🎯 M15 Scalper
+                        </button>
+                    </div>
+
+                    <!-- Lot Calculator Input Controls -->
+                    <div class="flex items-center gap-3 bg-slate-900/80 p-2 rounded-xl border border-slate-800 font-mono text-xs">
+                        <span class="text-slate-400 pl-2">Lot Size:</span>
+                        <input type="number" id="lotInput" value="1.0" step="0.1" min="0.01" class="w-16 bg-slate-950 border border-slate-700 rounded px-2 py-1 text-gold-400 font-bold focus:outline-none focus:border-gold-500" oninput="recalculateSignal()">
+                        <span class="text-slate-400">Lots</span>
+                    </div>
+                </div>
+
+                <!-- Signal Dynamic Breakdown Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <!-- Left: Signal Parameters -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-900/80 border border-slate-800">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold text-lg font-mono">
+                                    BUY
+                                </div>
+                                <div>
+                                    <div class="text-white font-bold text-lg font-mono" id="simPair">XAU/USD (Gold)</div>
+                                    <div class="text-xs text-slate-400" id="simTimeframe">H4 Timeframe | Institutional Order Block</div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xs font-mono text-slate-400">Est. Win Rate</div>
+                                <div class="text-lg font-bold font-mono text-emerald-400" id="simWinrate">92.8%</div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 text-center">
+                                <div class="text-xs text-slate-400 font-mono uppercase mb-1">Entry Price</div>
+                                <div class="text-xl sm:text-2xl font-bold font-mono text-white" id="simEntry">4069.00</div>
+                                <div class="text-[10px] text-slate-500 font-mono mt-1">Order Limit</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border border-emerald-500/30 text-center">
+                                <div class="text-xs text-slate-400 font-mono uppercase mb-1">Take Profit (TP)</div>
+                                <div class="text-xl sm:text-2xl font-bold font-mono text-emerald-400" id="simTp">4115.00</div>
+                                <div class="text-[10px] text-emerald-400 font-mono mt-1" id="simPipsGain">+460 Pips</div>
+                            </div>
+                            <div class="p-4 rounded-2xl bg-slate-900/90 border border-rose-500/30 text-center">
+                                <div class="text-xs text-slate-400 font-mono uppercase mb-1">Stop Loss (SL)</div>
+                                <div class="text-xl sm:text-2xl font-bold font-mono text-rose-400" id="simSl">4028.00</div>
+                                <div class="text-[10px] text-rose-400 font-mono mt-1" id="simPipsLoss">-410 Pips</div>
+                            </div>
+                        </div>
+
+                        <!-- Progress / Risk Reward Bar -->
+                        <div>
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-slate-400">Risk vs Reward Ratio: <strong class="text-gold-400" id="simRr">1 : 1.12</strong></span>
+                                <span class="text-slate-400">Estimated Profit: <strong class="text-emerald-400" id="simUsdProfit">$4,600 USD</strong></span>
+                            </div>
+                            <div class="h-3 w-full bg-slate-900 rounded-full overflow-hidden flex border border-slate-800">
+                                <div class="bg-rose-500 h-full transition-all" id="rrBarLoss" style="width: 45%;"></div>
+                                <div class="bg-emerald-500 h-full transition-all" id="rrBarGain" style="width: 55%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick Execution Panel -->
+                    <div class="p-6 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950 border border-gold-500/30 text-center">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-3">
+                            <i data-lucide="bell-ring" class="w-6 h-6"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white mb-1">Automated MT4/MT5 Sync</h4>
+                        <p class="text-xs text-slate-400 mb-6">
+                            Connect your broker account to auto-execute this signal in &lt; 200ms with custom risk per trade.
+                        </p>
+                        <button onclick="openModal('telegram')" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-black font-extrabold text-sm shadow-lg shadow-gold-500/20 hover:from-gold-400 hover:to-amber-500 transition-all flex items-center justify-center gap-2">
+                            <i data-lucide="send" class="w-4 h-4"></i> Copy To Telegram / MT5
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive XAU/USD Live Chart Component -->
+    <section id="chart-preview" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="text-sky-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Live AI Market Visualizer</div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white">XAU/USD Real-Time Price Engine</h2>
+                <p class="text-slate-400 mt-4 text-base">
+                    Simulated high-frequency algorithmic charting with AI liquidity pool detection and Order Block overlays.
+                </p>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-slate-800">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800">
+                    <div class="flex items-center gap-4">
+                        <div class="text-2xl font-extrabold font-mono text-white">XAU/USD</div>
+                        <div class="text-xl font-bold font-mono text-emerald-400">$4,069.50</div>
+                        <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 font-mono text-xs font-bold">+1.24% (+49.80)</span>
+                    </div>
+
+                    <div class="flex items-center gap-2 font-mono text-xs">
+                        <span class="text-slate-400">AI Trend Bias:</span>
+                        <span class="px-3 py-1 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 font-bold">STRONG BULLISH</span>
+                    </div>
+                </div>
+
+                <!-- Chart Canvas Container -->
+                <div class="relative w-full h-[380px] bg-slate-950/80 rounded-2xl p-4 border border-slate-900">
+                    <canvas id="xauChart"></canvas>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-6 font-mono text-xs">
+                    <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                        <div class="text-slate-500">24h High</div>
+                        <div class="text-slate-200 font-bold text-sm mt-0.5">$4,088.10</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                        <div class="text-slate-500">24h Low</div>
+                        <div class="text-slate-200 font-bold text-sm mt-0.5">$4,012.40</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                        <div class="text-slate-500">Institutional Delta</div>
+                        <div class="text-emerald-400 font-bold text-sm mt-0.5">+84.2k Lots</div>
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                        <div class="text-slate-500">Volatility Index</div>
+                        <div class="text-gold-400 font-bold text-sm mt-0.5">Moderate High</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Economic News Tracker Preview Section -->
+    <section id="news-tracker" class="py-20 bg-slate-950/60 border-y border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <div class="text-emerald-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Fundamental News Sentiment</div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Live High-Impact News Tracker</h2>
+                </div>
+                <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0">
+                    Our AI scans macro economic news releases in real-time, predicting volatility spikes before NFP, CPI, and FOMC updates.
+                </p>
+            </div>
+
+            <!-- News Tracker Table Replica -->
+            <div class="glass-panel rounded-3xl p-6 border border-slate-800 overflow-x-auto">
+                <table class="w-full text-left font-mono text-xs">
+                    <thead>
+                        <tr class="text-slate-400 border-b border-slate-800 uppercase tracking-wider">
+                            <th class="pb-4 font-semibold">Date</th>
+                            <th class="pb-4 font-semibold">Event Name</th>
+                            <th class="pb-4 font-semibold">Impact Level</th>
+                            <th class="pb-4 font-semibold">Forecast Status</th>
+                            <th class="pb-4 font-semibold text-right">AI Predicted Bias</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 text-slate-200">
+                        <!-- ISM PMI -->
+                        <tr class="hover:bg-slate-900/40 transition-colors">
+                            <td class="py-4">
+                                <div class="font-bold text-white text-sm">02</div>
+                                <div class="text-[10px] text-slate-500">NOV</div>
+                            </td>
+                            <td class="py-4">
+                                <div class="font-bold text-slate-100 text-sm">ISM PMI</div>
+                                <div class="text-[11px] text-slate-400">ISM Manufacturing PMI</div>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 font-bold border border-amber-500/20">MEDIUM</span>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Forecast pending</span>
+                            </td>
+                            <td class="py-4 text-right">
+                                <span class="text-rose-400 font-bold">Bearish USD (Gold Bullish)</span>
+                            </td>
+                        </tr>
+
+                        <!-- NFP -->
+                        <tr class="hover:bg-slate-900/40 transition-colors">
+                            <td class="py-4">
+                                <div class="font-bold text-white text-sm">06</div>
+                                <div class="text-[10px] text-slate-500">NOV</div>
+                            </td>
+                            <td class="py-4">
+                                <div class="font-bold text-slate-100 text-sm">NFP</div>
+                                <div class="text-[11px] text-slate-400">Non-Farm Payrolls</div>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-2.5 py-1 rounded bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30">HIGH IMPACT</span>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Forecast pending</span>
+                            </td>
+                            <td class="py-4 text-right">
+                                <span class="text-emerald-400 font-bold">Bullish XAU/USD (+600 Pips)</span>
+                            </td>
+                        </tr>
+
+                        <!-- GDP -->
+                        <tr class="hover:bg-slate-900/40 transition-colors">
+                            <td class="py-4">
+                                <div class="font-bold text-white text-sm">23</div>
+                                <div class="text-[10px] text-slate-500">DIS</div>
+                            </td>
+                            <td class="py-4">
+                                <div class="font-bold text-slate-100 text-sm">GDP</div>
+                                <div class="text-[11px] text-slate-400">Final GDP (Q/Q)</div>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-2.5 py-1 rounded bg-rose-500/20 text-rose-400 font-bold border border-rose-500/30">HIGH IMPACT</span>
+                            </td>
+                            <td class="py-4">
+                                <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-400 border border-slate-700">Forecast pending</span>
+                            </td>
+                            <td class="py-4 text-right">
+                                <span class="text-gold-400 font-bold">Neutral / Wait Confirmation</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platform Features Breakdown -->
+    <section id="features" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="text-gold-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Engineered For Profitability</div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white">Why Elite Traders Rely On NewsX AI</h2>
+                <p class="text-slate-400 mt-4 text-base">
+                    Combining machine learning model prediction with strict risk-to-reward parameters to safeguard capital.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-panel rounded-2xl p-6 border border-slate-800 hover:border-gold-500/40 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-6">
+                        <i data-lucide="cpu" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">AI Neural Sentiment</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Processes over 5,000 news articles, central bank speeches, and sentiment feeds per second to spot institutional bias.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="glass-panel rounded-2xl p-6 border border-slate-800 hover:border-sky-500/40 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 mb-6">
+                        <i data-lucide="target" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">High-Pips Swing Signals</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Delivers clean Entry, TP1, TP2, and SL coordinates designed to capture 300 to 800 pips per trade setup.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="glass-panel rounded-2xl p-6 border border-slate-800 hover:border-emerald-500/40 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mb-6">
+                        <i data-lucide="shield" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Dynamic Risk Guard</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Calculates optimal lot sizes and auto-adjusts stop-loss to Breakeven once initial targets are achieved.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="glass-panel rounded-2xl p-6 border border-slate-800 hover:border-purple-500/40 transition-all hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 mb-6">
+                        <i data-lucide="zap" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2">Instant Telegram Alerts</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Get instant push notifications on phone or desktop as soon as AI detects high-probability setup conditions.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing / Membership Tiers -->
+    <section id="pricing" class="py-20 bg-slate-950/60 border-t border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <div class="text-gold-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Transparent Pricing</div>
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white">Choose Your VIP Access Pass</h2>
+                <p class="text-slate-400 mt-4 text-base">
+                    Unlock institutional XAU/USD signals, fundamental sentiment reports, and automated MT5 integration.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-stretch">
+                <!-- Free Starter -->
+                <div class="glass-panel rounded-3xl p-8 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="text-sm font-bold font-mono text-slate-400 uppercase">Starter Pass</div>
+                        <div class="mt-4 flex items-baseline">
+                            <span class="text-4xl font-extrabold text-white">$0</span>
+                            <span class="text-slate-400 text-xs ml-2">/ Forever Free</span>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-400">Perfect for trying out delayed signals and public news updates.</p>
+
+                        <ul class="mt-6 space-y-3 text-xs text-slate-300">
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> 1 Daily Free Gold Signal</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Basic Economic News Feed</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-emerald-400"></i> Community Telegram Access</li>
+                            <li class="flex items-center gap-2.5 text-slate-600"><i data-lucide="x" class="w-4 h-4"></i> Priority Swing Signals</li>
+                            <li class="flex items-center gap-2.5 text-slate-600"><i data-lucide="x" class="w-4 h-4"></i> Auto Execution Bot</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('telegram')" class="mt-8 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition-all">
+                        Join Free Group
+                    </button>
+                </div>
+
+                <!-- VIP Monthly (Featured) -->
+                <div class="glass-panel-gold rounded-3xl p-8 border-2 border-gold-500 relative flex flex-col justify-between shadow-2xl shadow-gold-500/10">
+                    <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-gold-500 to-amber-600 text-black font-extrabold font-mono text-[10px] uppercase tracking-wider">
+                        Most Popular Trader Choice
+                    </div>
+
+                    <div>
+                        <div class="text-sm font-bold font-mono text-gold-400 uppercase">VIP Signals Pass</div>
+                        <div class="mt-4 flex items-baseline">
+                            <span class="text-5xl font-extrabold text-white">$49</span>
+                            <span class="text-slate-400 text-xs ml-2">/ Month</span>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-300">Complete access to high-winrate Swing & Intraday Gold signals.</p>
+
+                        <ul class="mt-6 space-y-3 text-xs text-slate-200 font-medium">
+                            <li class="flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400"></i> Unlimited Priority XAU/USD Signals</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400"></i> Entry, TP1, TP2 & SL Auto Targets</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400"></i> Instant Instant Telegram Bot Alerts</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400"></i> AI NFP / CPI Sentiment Warnings</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check-circle-2" class="w-4 h-4 text-gold-400"></i> Risk & Pip Lot Calculator App</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('payment')" class="mt-8 w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 hover:from-gold-400 hover:to-amber-500 text-black font-extrabold text-sm shadow-lg shadow-gold-500/25 transition-all">
+                        Get VIP Access Now
+                    </button>
+                </div>
+
+                <!-- Lifetime Pass -->
+                <div class="glass-panel rounded-3xl p-8 border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="text-sm font-bold font-mono text-sky-400 uppercase">Lifetime AI Pass</div>
+                        <div class="mt-4 flex items-baseline">
+                            <span class="text-4xl font-extrabold text-white">$299</span>
+                            <span class="text-slate-400 text-xs ml-2">/ One-time</span>
+                        </div>
+                        <p class="mt-2 text-xs text-slate-400">Lifetime access plus automated broker trade syncing software.</p>
+
+                        <ul class="mt-6 space-y-3 text-xs text-slate-300">
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Everything in VIP Pass Forever</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Automated MT4/MT5 Execution EA</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> 1-on-1 Trading Mentorship Access</li>
+                            <li class="flex items-center gap-2.5"><i data-lucide="check" class="w-4 h-4 text-sky-400"></i> Custom Liquidity Level Indicators</li>
+                        </ul>
+                    </div>
+
+                    <button onclick="openModal('payment')" class="mt-8 w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs border border-slate-700 transition-all">
+                        Buy Lifetime Pass
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="text-gold-400 font-mono text-sm font-bold uppercase tracking-wider mb-2">Got Questions?</div>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Accordion 1 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq('faq1')" class="w-full p-6 text-left font-bold text-white text-base flex justify-between items-center">
+                        <span>How does NewsX AI generate XAU/USD signals?</span>
+                        <i data-lucide="chevron-down" id="faq1-icon" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="faq1" class="hidden px-6 pb-6 text-sm text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+                        NewsX AI combines deep learning algorithms that scan multi-timeframe liquidity pools with real-time news sentiment processing (NFP, CPI, interest rate decision speeches) to generate high-probability trade coordinates with automated Entry, Take Profit, and Stop Loss targets.
+                    </div>
+                </div>
+
+                <!-- Accordion 2 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq('faq2')" class="w-full p-6 text-left font-bold text-white text-base flex justify-between items-center">
+                        <span>What is the average win rate of VIP signals?</span>
+                        <i data-lucide="chevron-down" id="faq2-icon" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="faq2" class="hidden px-6 pb-6 text-sm text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+                        Across 1,200+ backtested and live trade signals, NewsX AI maintains an average verified win rate of 89% to 92%, utilizing a minimum Risk-to-Reward ratio of 1:1.5.
+                    </div>
+                </div>
+
+                <!-- Accordion 3 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq('faq3')" class="w-full p-6 text-left font-bold text-white text-base flex justify-between items-center">
+                        <span>Can I copy trade automatically to my MT4/MT5 account?</span>
+                        <i data-lucide="chevron-down" id="faq3-icon" class="w-5 h-5 text-slate-400 transition-transform"></i>
+                    </button>
+                    <div id="faq3" class="hidden px-6 pb-6 text-sm text-slate-400 leading-relaxed border-t border-slate-800/60 pt-4">
+                        Yes! VIP Lifetime members receive our custom MT4/MT5 Copier EA which seamlessly connects Telegram signal triggers directly to your broker terminal in under 200 milliseconds.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Banner -->
+    <section class="py-20 bg-gradient-to-b from-slate-950 to-black relative overflow-hidden">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="glass-panel-gold rounded-3xl p-10 sm:p-16 border border-gold-500/40 relative overflow-hidden">
+                <h2 class="text-3xl sm:text-5xl font-extrabold text-white">
+                    Start Trading Gold With <span class="gold-gradient-text">AI Precision Today</span>
+                </h2>
+                <p class="mt-4 text-slate-300 max-w-xl mx-auto text-base">
+                    Join over 14,000+ traders maximizing profits on XAU/USD and major Forex pairs.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <button onclick="openModal('telegram')" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-gold-400 to-amber-600 hover:from-gold-300 hover:to-amber-500 text-black font-extrabold text-base shadow-xl shadow-gold-500/20 transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-5 h-5"></i> Join Telegram VIP Signals
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-slate-900 py-12 text-slate-500 text-xs font-mono">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center text-black font-extrabold">X</div>
+                <span class="text-slate-300 font-bold text-sm">NewsX AI Signals</span>
+            </div>
+            <div>
+                © 2026 NewsX AI Technologies. All rights reserved. Not financial advice.
+            </div>
+            <div class="flex items-center gap-6 text-slate-400">
+                <a href="#" class="hover:text-gold-400">Risk Disclaimer</a>
+                <a href="#" class="hover:text-gold-400">Terms of Service</a>
+                <a href="#" class="hover:text-gold-400">Privacy Policy</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal Dialogs -->
+    <div id="appModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-panel rounded-3xl max-w-md w-full p-6 sm:p-8 border border-slate-700 relative animate-float">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i data-lucide="x" class="w-6 h-6"></i>
+            </button>
+
+            <div id="modalContent">
+                <!-- Dynamic Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Strategy Data Store
+        const strategies = {
+            swing: {
+                pair: "XAU/USD (Gold)",
+                tf: "H4 Timeframe | Priority Swing Buy",
+                winrate: "92.8%",
+                entry: "4069.00",
+                tp: "4115.00",
+                sl: "4028.00",
+                pipsGain: 460,
+                pipsLoss: 410,
+                rr: "1 : 1.12"
+            },
+            intraday: {
+                pair: "XAU/USD (Gold)",
+                tf: "H1 Timeframe | Volatility Breakout",
+                winrate: "89.5%",
+                entry: "4060.50",
+                tp: "4092.00",
+                sl: "4040.00",
+                pipsGain: 315,
+                pipsLoss: 205,
+                rr: "1 : 1.53"
+            },
+            scalp: {
+                pair: "XAU/USD (Gold)",
+                tf: "M15 Timeframe | Quick Scalp",
+                winrate: "86.2%",
+                entry: "4065.00",
+                tp: "4078.00",
+                sl: "4058.00",
+                pipsGain: 130,
+                pipsLoss: 70,
+                rr: "1 : 1.85"
+            }
+        };
+
+        let currentStrat = 'swing';
+
+        // Render Lucide Icons
+        lucide.createIcons();
+
+        // Strategy Selector Handler
+        function setStrategy(stratKey) {
+            currentStrat = stratKey;
+            const strat = strategies[stratKey];
+
+            // Reset tab styles
+            ['swing', 'intraday', 'scalp'].forEach(key => {
+                const btn = document.getElementById(`tab-${key}`);
+                if (key === stratKey) {
+                    btn.className = "px-5 py-2.5 rounded-xl font-bold text-sm transition-all bg-gradient-to-r from-gold-500 to-amber-600 text-black shadow-md";
+                } else {
+                    btn.className = "px-5 py-2.5 rounded-xl font-semibold text-sm transition-all text-slate-400 hover:text-white";
+                }
+            });
+
+            // Update UI
+            document.getElementById('simPair').innerText = strat.pair;
+            document.getElementById('simTimeframe').innerText = strat.tf;
+            document.getElementById('simWinrate').innerText = strat.winrate;
+            document.getElementById('simEntry').innerText = strat.entry;
+            document.getElementById('simTp').innerText = strat.tp;
+            document.getElementById('simSl').innerText = strat.sl;
+            document.getElementById('simPipsGain').innerText = `+${strat.pipsGain} Pips`;
+            document.getElementById('simPipsLoss').innerText = `-${strat.pipsLoss} Pips`;
+            document.getElementById('simRr').innerText = strat.rr;
+
+            recalculateSignal();
+        }
+
+        // Recalculate Lot Profits
+        function recalculateSignal() {
+            const lot = parseFloat(document.getElementById('lotInput').value) || 1.0;
+            const strat = strategies[currentStrat];
+            // Standard gold pip calculation ($10 per pip on 1.0 lot)
+            const usdProfit = (strat.pipsGain * lot * 10).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            document.getElementById('simUsdProfit').innerText = `${usdProfit} USD`;
+        }
+
+        // Accordion Toggle
+        function toggleFaq(id) {
+            const el = document.getElementById(id);
+            const icon = document.getElementById(`${id}-icon`);
+            if (el.classList.contains('hidden')) {
+                el.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                el.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Modal Handlers
+        function openModal(type) {
+            const modal = document.getElementById('appModal');
+            const content = document.getElementById('modalContent');
+
+            if (type === 'telegram') {
+                content.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400 mb-4">
+                            <i data-lucide="send" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">Connect Telegram VIP</h3>
+                        <p class="text-xs text-slate-400 mb-6">Redirecting to official NewsX AI Telegram signal channel...</p>
+                        <a href="https://t.me" target="_blank" onclick="closeModal()" class="w-full py-3.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-black font-extrabold text-sm transition-all flex items-center justify-center gap-2">
+                            Open Telegram Channel
+                        </a>
+                    </div>
+                `;
+            } else if (type === 'payment') {
+                content.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 mx-auto rounded-full bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 mb-4">
+                            <i data-lucide="credit-card" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2">VIP Signal Checkout</h3>
+                        <p class="text-xs text-slate-400 mb-6">Instant access code sent to your email post payment.</p>
+                        <div class="space-y-3 mb-6">
+                            <input type="email" placeholder="Enter your email address" class="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:outline-none focus:border-gold-500">
+                        </div>
+                        <button onclick="alert('Demo Mode: Processing mock payment checkout...'); closeModal();" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-gold-500 to-amber-600 text-black font-extrabold text-sm shadow-lg shadow-gold-500/20 transition-all">
+                            Proceed to Secure Payment
+                        </button>
+                    </div>
+                `;
+            } else if (type === 'demo') {
+                content.innerHTML = `
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-white mb-4">NewsX AI Signal Engine Demo</h3>
+                        <div class="aspect-video bg-slate-900 rounded-2xl flex items-center justify-center border border-slate-800 text-slate-500 font-mono text-xs">
+                            [Interactive Video Preview Streaming]
+                        </div>
+                        <button onclick="closeModal()" class="mt-6 px-6 py-2 rounded-xl bg-slate-800 text-slate-300 font-bold text-xs">Close Preview</button>
+                    </div>
+                `;
+            }
+
+            lucide.createIcons();
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('appModal').classList.add('hidden');
+        }
+
+        // Live Interactive Chart Rendering
+        window.addEventListener('load', function() {
+            const ctx = document.getElementById('xauChart').getContext('2d');
+            
+            // Gradient fill
+            const gradient = ctx.createLinearGradient(0, 0, 0, 300);
+            gradient.addColorStop(0, 'rgba(16, 185, 129, 0.25)');
+            gradient.addColorStop(1, 'rgba(16, 185, 129, 0)');
+
+            const xauChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', 'NOW'],
+                    datasets: [{
+                        label: 'XAU/USD Price ($)',
+                        data: [4012.5, 4025.1, 4018.0, 4038.4, 4045.2, 4039.0, 4055.8, 4062.1, 4069.0, 4069.5],
+                        borderColor: '#10b981',
+                        borderWidth: 3,
+                        backgroundColor: gradient,
+                        fill: true,
+                        tension: 0.35,
+                        pointBackgroundColor: '#eab308',
+                        pointBorderColor: '#000',
+                        pointRadius: 4,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+                        },
+                        y: {
+                            grid: { color: 'rgba(255, 255, 255, 0.05)' },
+                            ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
